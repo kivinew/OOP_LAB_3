@@ -3,11 +3,12 @@
 void main()
 {
 	setlocale(LC_ALL, "Russian");
-	int nomer;
+	AbstractTime* time;
+	int nomer, size;
 	char c = 0;
 	while (c != '0')
 	{
-		cout << "---------------ГЛАВНОЕ МЕНЮ---------------" << endl;
+		cout << endl << "---------------ГЛАВНОЕ МЕНЮ---------------" << endl;
 		cout << "1. Создание нового объекта" << endl;
 		cout << "2. Ввод новых значений для указанного объекта" << endl;
 		cout << "3. Удаление указанного объекта" << endl;
@@ -21,15 +22,29 @@ void main()
 			break;	
 
 		case '1':
-			cout << endl << "-----Создание нового объекта-----" << endl;
+			cout << endl << "----------Создание нового объекта----------" << endl;
 			Time::AddTime();
-			nomer = Time::GetSize();
+			nomer = Time::GetSize() - 1;
 			cout << "Создан "<< nomer << "-ый объект Time:" << endl;
-			Time::ShowTime(nomer);
+			time = Time::GetPointerTime(nomer);
+			time->PrintTime();
 			break;
 
 		case '2':
-
+			cout << "-----Ввод новых значений для указанного объекта-----" << endl;
+			nomer = -1;
+			size = Time::GetSize();
+			while ((nomer < 0) || (nomer >= size))
+			{
+				cout << "Введите номер объекта: ";
+				cin >> nomer;
+				if ((nomer < 0) || (nomer >= size))
+					cout << "Номер объекта введен некорректно!" << endl;
+			}
+			time = Time::GetPointerTime(nomer);
+			time->InputTime();
+			cout << "Изменен "<< nomer << "-ый объект Time:" << endl;
+			time->PrintTime();
 			break;
 
 		case '3':

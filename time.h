@@ -17,7 +17,7 @@ public:
 	void InputTime();
 	void PrintTime();
 	static int GetSize();
-	static void ShowTime(int n);
+	static AbstractTime* GetPointerTime(int n);
 	static void ShowArrayTime();
 	static void AddTime();
 	static void DeleteTime(int n);
