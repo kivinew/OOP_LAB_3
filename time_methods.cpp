@@ -104,19 +104,30 @@ void Time::PrintTime()
 	}
 }
 
+int Time::GetSize()
+{
+	return size;
+}
+
+void Time::ShowTime(int n)
+{
+	cout << "[" << n << "]: ";
+	Arr[n]->PrintTime();
+}
+
 void Time::ShowArrayTime()
 {
 	cout << "size = " << size << endl;
 	for (int i = 0; i < size; i++)
 	{
 		cout << "[" << i << "]: ";
-		Arr[i]->PrintTime;
+		Arr[i]->PrintTime();
 	}
 }
 
 void Time::AddTime()
 {
-	AbstractTime* p = new Time();
+	Time* p = new Time();
 	p->InputTime();
 }
 
