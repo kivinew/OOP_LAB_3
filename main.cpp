@@ -31,7 +31,7 @@ void main()
 			break;
 
 		case '2':
-			cout << "-----Ввод новых значений для указанного объекта-----" << endl;
+			cout << endl << "-----Ввод новых значений для указанного объекта-----" << endl;
 			nomer = -1;
 			size = Time::GetSize();
 			while ((nomer < 0) || (nomer >= size))
@@ -48,11 +48,23 @@ void main()
 			break;
 
 		case '3':
-
+			cout << endl << "----------Удаление указанного объекта----------" << endl;
+			nomer = -1;
+			size = Time::GetSize();
+			while ((nomer < 0) || (nomer >= size))
+			{
+				cout << "Введите номер объекта: ";
+				cin >> nomer;
+				if ((nomer < 0) || (nomer >= size))
+					cout << "Номер объекта введен некорректно!" << endl;
+			}
+			Time::DeleteTime(nomer);
+			cout << "Удален "<< nomer << "-ый объект Time:" << endl;
 			break;
 
 		case '4':
-
+			cout << endl << "----------Вывод на экран всех объектов----------" << endl;
+			Time::ShowArrayTime();
 			break;
 
 		default:
