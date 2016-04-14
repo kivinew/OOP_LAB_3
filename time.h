@@ -16,5 +16,7 @@ public:
 	~Time();
 	void InputTime();
 	void PrintTime();
-
+	static void ShowArrayTime();
+	static void AddTime();
+	static void DeleteTime(int n);
 };

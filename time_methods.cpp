@@ -103,3 +103,25 @@ void Time::PrintTime()
 		cout << Sec << endl;
 	}
 }
+
+void Time::ShowArrayTime()
+{
+	cout << "size = " << size << endl;
+	for (int i = 0; i < size; i++)
+	{
+		cout << "[" << i << "]: ";
+		Arr[i]->PrintTime;
+	}
+}
+
+void Time::AddTime()
+{
+	AbstractTime* p = new Time();
+	p->InputTime();
+}
+
+void Time::DeleteTime(int n)
+{
+	if ((n >= 0) && (n < size))
+		delete Arr[n];
+}
