@@ -4,10 +4,11 @@ using namespace std;
 
 class Time : public AbstractTime
 {
-	//static int Count;
 	int Hour;
 	int Min;
 	int Sec;
+	static AbstractTime** Arr;
+	static int size;
 public:
 	Time();
 	Time(int, int, int);
@@ -16,4 +17,4 @@ public:
 	void InputTime();
 	void PrintTime();
 
-}
+};

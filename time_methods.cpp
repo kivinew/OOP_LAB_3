@@ -1,27 +1,59 @@
 #include "time.h"
 
-//int Time::Count = 0;
+AbstractTime** Time::Arr = NULL;
+int Time::size = 0;
 
 Time::Time() : Hour(0), Min(0), Sec(0)
 {
-	//Count++;
+	AbstractTime** tmp = new AbstractTime*[size + 1];
+	for (int i = 0; i < size; i++)
+		tmp[i] = Arr[i];
+	tmp[size] = this;
+	if (Arr != NULL) delete[] Arr;
+	Arr = tmp;
+	size++;
 }
 
 Time::Time(int hour, int min=0, int sec=0) : Hour(hour), Min(min), Sec(sec)
 {
-	//Count++;
+	AbstractTime** tmp = new AbstractTime*[size + 1];
+	for (int i = 0; i < size; i++)
+		tmp[i] = Arr[i];
+	tmp[size] = this;
+	if (Arr != NULL) delete[] Arr;
+	Arr = tmp;
+	size++;
 }
 
 Time::Time(Time &t) : Hour(t.Hour), Min(t.Min), Sec(t.Sec)
 {
-	//Count++;
+	AbstractTime** tmp = new AbstractTime*[size + 1];
+	for (int i = 0; i < size; i++)
+		tmp[i] = Arr[i];
+	tmp[size] = this;
+	if (Arr != NULL) delete[] Arr;
+	Arr = tmp;
+	size++;
 }
 
 Time::~Time()
 {
-	//Count--;
+	if (size == 1)
+	{
+		if (Arr != NULL) delete[] Arr;
+		Arr = NULL;
+		size--;
+	}
+	if (size > 1)
+	{
+		AbstractTime** tmp = new AbstractTime*[size - 1];
+		for (int i = 0, j = 0; i < size; i++)
+			if (Arr[i] != this)
+				tmp[j++] = Arr[i];
+		if (Arr != NULL) delete[] Arr;
+		size--;
+	}
 }
-
 
 void Time::InputTime ()
 {
