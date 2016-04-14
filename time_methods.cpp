@@ -51,6 +51,7 @@ Time::~Time()
 			if (Arr[i] != this)
 				tmp[j++] = Arr[i];
 		if (Arr != NULL) delete[] Arr;
+		delete this;
 		Arr = tmp;
 		size--;
 	}
