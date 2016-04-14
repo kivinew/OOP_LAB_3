@@ -41,6 +41,7 @@ Time::~Time()
 	if (size == 1)
 	{
 		if (Arr != NULL) delete[] Arr;
+		delete this;
 		Arr = NULL;
 		size--;
 	}
