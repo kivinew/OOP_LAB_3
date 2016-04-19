@@ -9,6 +9,9 @@ class Time : public AbstractTime
 	int Sec;
 	static AbstractTime** Arr;
 	static int size;
+	static int sizeMax;
+	static void AddTime(Time &t);
+	static void RemoveTime(Time &t);
 public:
 	Time();
 	Time(int, int, int);
@@ -19,6 +22,5 @@ public:
 	static int GetSize();
 	static AbstractTime* GetPointerTime(int n);
 	static void ShowArrayTime();
-	static void AddTime();
-	static void DeleteTime(int n);
+	static void RemoveAllTime();
 };

@@ -13,6 +13,7 @@ void main()
 		cout << "2. Ввод новых значений для указанного объекта" << endl;
 		cout << "3. Удаление указанного объекта" << endl;
 		cout << "4. Вывод на экран всех объектов" << endl;
+		cout << "5. Удаление всех объектов" << endl;
 		cout << "0. ВЫХОД" << endl;
 		cout << "Введите номер команды: ";
 		cin >> c;
@@ -23,7 +24,8 @@ void main()
 
 		case '1':
 			cout << endl << "----------Создание нового объекта----------" << endl;
-			Time::AddTime();
+			time = new Time();
+			time->InputTime();
 			nomer = Time::GetSize() - 1;
 			cout << "Создан "<< nomer << "-ый объект Time:" << endl;
 			time = Time::GetPointerTime(nomer);
@@ -58,13 +60,20 @@ void main()
 				if ((nomer < 0) || (nomer >= size))
 					cout << "Номер объекта введен некорректно!" << endl;
 			}
-			Time::DeleteTime(nomer);
+			time = Time::GetPointerTime(nomer);
+			delete time;
 			cout << "Удален "<< nomer << "-ый объект Time:" << endl;
 			break;
 
 		case '4':
 			cout << endl << "----------Вывод на экран всех объектов----------" << endl;
 			Time::ShowArrayTime();
+			break;
+
+		case '5':
+			cout << endl << "----------Удаление всех объектов----------" << endl;
+			Time::RemoveAllTime();
+			cout << "Удален массив объектов!" << endl;
 			break;
 
 		default:

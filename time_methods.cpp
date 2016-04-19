@@ -2,60 +2,78 @@
 
 AbstractTime** Time::Arr = NULL;
 int Time::size = 0;
+int Time::sizeMax = 0;
 
 Time::Time() : Hour(0), Min(0), Sec(0)
 {
-	AbstractTime** tmp = new AbstractTime*[size + 1];
-	for (int i = 0; i < size; i++)
-		tmp[i] = Arr[i];
-	tmp[size] = this;
-	if (Arr != NULL) delete[] Arr;
-	Arr = tmp;
-	size++;
+	AddTime(*this);
 }
 
 Time::Time(int hour, int min=0, int sec=0) : Hour(hour), Min(min), Sec(sec)
 {
-	AbstractTime** tmp = new AbstractTime*[size + 1];
-	for (int i = 0; i < size; i++)
-		tmp[i] = Arr[i];
-	tmp[size] = this;
-	if (Arr != NULL) delete[] Arr;
-	Arr = tmp;
-	size++;
+	AddTime(*this);
 }
 
 Time::Time(Time &t) : Hour(t.Hour), Min(t.Min), Sec(t.Sec)
 {
-	AbstractTime** tmp = new AbstractTime*[size + 1];
-	for (int i = 0; i < size; i++)
-		tmp[i] = Arr[i];
-	tmp[size] = this;
-	if (Arr != NULL) delete[] Arr;
-	Arr = tmp;
-	size++;
+	AddTime(*this);
 }
 
 Time::~Time()
 {
+	RemoveTime(*this);
+}
+
+void Time::AddTime(Time &t)
+{
+	if (Arr == NULL)
+	{
+		sizeMax = 2;
+		Arr = new AbstractTime*[sizeMax];
+		for (int i = 0; i < sizeMax; i++) Arr[i] = NULL; //?
+	}
+	if (size == sizeMax)
+	{
+		sizeMax *= 2;
+		AbstractTime** nArr = new AbstractTime*[sizeMax];
+		for (int i = 0; i < size; i++) nArr[i] = Arr[i];
+		for (int i = size; i < sizeMax; i++) nArr[i] = NULL; //?
+		delete[] Arr;
+		Arr = nArr;
+	}
+	Arr[size++] = &t;
+}
+
+void Time::RemoveTime(Time &t)
+{
 	if (size == 1)
 	{
-		if (Arr != NULL) delete[] Arr;
-		delete this;
+		delete[] Arr;
 		Arr = NULL;
 		size--;
-	}
-	if (size > 1)
+		return;
+	}	
+	if ((size > 1) && (size - 1 <= sizeMax/3))
 	{
-		AbstractTime** tmp = new AbstractTime*[size - 1];
+		sizeMax /= 2;
+		AbstractTime** nArr = new AbstractTime*[sizeMax];
 		for (int i = 0, j = 0; i < size; i++)
-			if (Arr[i] != this)
-				tmp[j++] = Arr[i];
-		if (Arr != NULL) delete[] Arr;
-		delete this;
-		Arr = tmp;
-		size--;
+			if (Arr[i] != &t)
+				nArr[j++] = Arr[i];
+		for (int i = size - 1; i < sizeMax; i++) nArr[i] = NULL;
+		delete[] Arr;
+		Arr = nArr;
 	}
+	else
+	{
+		int nomer;
+		for (int i = 0; i < size; i++)
+			if (Arr[i] == &t) { nomer = i; break; }
+		for (int i = nomer + 1; i < size; i++)
+			Arr[i-1] = Arr[i];
+		Arr[size-1] = NULL;		
+	}
+	size--;
 }
 
 void Time::InputTime ()
@@ -85,7 +103,6 @@ void Time::InputTime ()
 	Hour = hour;
 	Min = min;
 	Sec = sec;
-	//SetTime(hour, min, sec);
 }
 
 void Time::PrintTime()
@@ -127,14 +144,10 @@ void Time::ShowArrayTime()
 	}
 }
 
-void Time::AddTime()
+void Time::RemoveAllTime()
 {
-	AbstractTime* p = new Time();
-	p->InputTime();
-}
-
-void Time::DeleteTime(int n)
-{
-	if ((n >= 0) && (n < size))
-		delete Arr[n];
+	int n = size;
+	for (int i = 0; i < n; i++)
+		if (Arr[size-1] != NULL)
+			delete Arr[size-1];
 }
